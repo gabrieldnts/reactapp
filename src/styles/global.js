@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     background: #8A2BE2;
     text-rendering:optimizeLegibility !important;
     -webkit-font-smoothing:antialiased !important;
+    font-family:sans-serif;
   }
 `
 export default GlobalStyle;
