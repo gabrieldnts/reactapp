@@ -1,14 +1,12 @@
-import React,{Fragment} from 'react';
+import React from 'react';
 import GlobalStyle from './styles/global'
-
+import Main from './pages/Main'
 const App = () =>{
-  return( 
-    <Fragment>
-      <GlobalStyle/>
-        <div className="text">
-          <text>Github Compare</text>
-        </div>
-    </Fragment>
+  return(
+  <>
+  <GlobalStyle/>
+  <Main/>
+  </>
   )
 }
 
