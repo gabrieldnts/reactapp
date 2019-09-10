@@ -1,13 +1,15 @@
-import React,{Component,Fragment} from 'react';
+import React,{Fragment} from 'react';
+import GlobalStyle from './styles/global'
 
-class App extends Component {
-  render(){
-    return(
-      <div className="App">
-        <text>Github Compare</text>
-    </div>
-    )
-  }
+const App = () =>{
+  return( 
+    <Fragment>
+      <GlobalStyle/>
+        <div className="text">
+          <text>Github Compare</text>
+        </div>
+    </Fragment>
+  )
 }
 
 export default App;
