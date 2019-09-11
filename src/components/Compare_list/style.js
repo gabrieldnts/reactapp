@@ -48,7 +48,7 @@ export const Repository = styled.div`
       }
     }
       &:nth-child(2n){
-        background-color:#f9f9c9;
+        background-color:#D3D3D3;
       }
     
   }
