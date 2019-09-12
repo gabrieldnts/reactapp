@@ -8,6 +8,7 @@ import CompareList from '../../components/Compare_list'
 
 class Main extends Component{
     state ={
+    loading: false,
     repositoryError: false,
     repositoryInput: '',
     repositories:[
@@ -17,6 +18,7 @@ class Main extends Component{
   handleAddRepository = async (e) =>{
     e.preventDefault();
 
+    this.setState({loading:true});
     try{
       const {data: repository} = await api.get(`/repos/${this.state.repositoryInput}`);
       repository.lastCommit = moment(repository.pushed_at).fromNow();
@@ -30,6 +32,9 @@ class Main extends Component{
     catch(err){
       this.setState({repositoryError : true})
     }
+    finally{
+      this.setState({loading:false});
+    }
   }
   render(){
   return(
@@ -41,7 +46,7 @@ class Main extends Component{
       placeholder="Procurar repositório"
       value={this.state.repositoryInput}
       onChange = {e => this.setState({repositoryInput: e.target.value})}/>
-      <button type="submit">+</button>
+      <button type="submit">{this.state.loading ? <i className = "fa fa-spinner fa-pulse"/> : <p>+</p>}</button>
       <SweetAlert
         show={this.state.repositoryError}
         title="Ops!"
