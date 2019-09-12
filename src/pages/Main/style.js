@@ -18,7 +18,7 @@ import styled from 'styled-components'
     height:55px;
     padding: 0 20px;
     background:#FFF;
-    border:0;
+    border:${props => (props.searchError ? '2px solid #f00 ':0)};
     font-size:18px;
     color:#444;
     outline:0;
