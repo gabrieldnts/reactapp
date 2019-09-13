@@ -11,9 +11,7 @@ class Main extends Component{
     loading: false,
     repositoryError: false,
     repositoryInput: '',
-    repositories:[
-      
-    ],
+    repositories: JSON.parse(localStorage.getItem("@app:repos")) || [],
   }
   handleAddRepository = async (e) =>{
     e.preventDefault();
@@ -28,6 +26,7 @@ class Main extends Component{
         repositories: [...this.state.repositories, repository],
         repositoryError:false,
       })
+      localStorage.setItem("@app:repos",JSON.stringify(this.state.repositories))
     }
     catch(err){
       this.setState({repositoryError : true})
@@ -36,6 +35,39 @@ class Main extends Component{
       this.setState({loading:false});
     }
   }
+
+  handleRemoveRepository = (id) => {
+    const filteredRepositories = this.state.repositories.filter( repository => repository.id !== id);
+    this.setState({...this.state,repositories: filteredRepositories});
+    localStorage.setItem("@app:repos",JSON.stringify(filteredRepositories))
+  }
+
+  handleUpdateRepository = async (repoName) => {
+
+    try{
+      const {data: repository} = await api.get(`/repos/${repoName}`);
+      repository.lastCommit = moment(repository.pushed_at).fromNow();
+
+      const filteredRepositories = this.state.repositories.filter( 
+        localRepository => localRepository.id !== repository.id
+      );
+    
+      this.setState({
+        repositoryInput:'',
+        repositories: [...filteredRepositories, repository],
+        repositoryError:false,
+      })
+
+      localStorage.setItem("@app:repos",JSON.stringify([...filteredRepositories, repository]))
+    }
+    catch(err){
+      this.setState({repositoryError : true})
+    }
+    finally{
+      this.setState({loading:false});
+    }
+  }
+
   render(){
   return(
    
@@ -46,6 +78,7 @@ class Main extends Component{
       placeholder="Procurar repositório"
       value={this.state.repositoryInput}
       onChange = {e => this.setState({repositoryInput: e.target.value})}/>
+
       <button type="submit">{this.state.loading ? <i className = "fa fa-spinner fa-pulse"/> : <p>+</p>}</button>
       <SweetAlert
         show={this.state.repositoryError}
@@ -54,7 +87,7 @@ class Main extends Component{
         onConfirm={() => this.setState({ repositoryError: false })}
       />
     </Form>
-    <CompareList repositories={this.state.repositories}/>
+    <CompareList updateRepository={this.handleUpdateRepository} removeRepository={this.handleRemoveRepository} repositories={this.state.repositories}/>
   </Container>
   
   )

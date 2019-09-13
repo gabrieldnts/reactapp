@@ -33,6 +33,13 @@ export const Repository = styled.div`
       color:#666;
       font-size:14px;
     }
+    .fa-trash{
+      flex:1;
+      color:#DC143C;
+    }
+    .fa-refresh{
+      color:#6495ED;
+    }
   };
   ul{
     list-style:none;
