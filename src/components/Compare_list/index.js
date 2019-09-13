@@ -13,8 +13,8 @@ const CompareList = ({repositories, removeRepository, updateRepository}) => {
             <strong>{repository.name}</strong>
             <small>{repository.owner.login}</small>
             <div>
-            <i alt="Deletar" className="fa fa-trash"onClick={() => removeRepository(repository.id)}/>
-            <i alt="Atualizar"className="fa fa-refresh" onClick={() => updateRepository(`${repository.owner.login}/${repository.name}`)}/>
+            <i className="fa fa-trash"onClick={() => removeRepository(repository.id)}/>
+            <i className="fa fa-refresh" onClick={() => updateRepository(`${repository.owner.login}/${repository.name}`)}/>
             </div>
           </header>
           <ul>
